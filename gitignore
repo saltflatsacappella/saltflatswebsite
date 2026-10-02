@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Netlify local state
+.netlify/
+
+# Node (only if tooling is added later)
+node_modules/

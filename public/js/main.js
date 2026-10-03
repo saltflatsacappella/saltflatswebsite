@@ -37,7 +37,8 @@
 
   /* 2. Click-to-play YouTube tiles -------------------------------------- */
   /* Markup: <div class="video__frame" data-video-id="..."><button class="video__play">...</button></div>
-     The thumbnail comes from YouTube; if the high-res one is missing we fall back to the standard one. */
+     The thumbnail comes from YouTube via srcset; if the browser picks the high-res one and it's missing,
+     we drop the srcset and fall back to the standard one. */
   var frames = document.querySelectorAll(".video__frame[data-video-id]");
 
   Array.prototype.forEach.call(frames, function (frame) {
@@ -46,16 +47,16 @@
     var img = frame.querySelector("img");
 
     if (img) {
+      var fallback = function () {
+        img.removeAttribute("srcset");
+        img.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+      };
       img.addEventListener("load", function () {
         // YouTube returns a 120x90 placeholder when maxresdefault doesn't exist.
-        if (img.naturalWidth <= 120 && img.src.indexOf("maxresdefault") !== -1) {
-          img.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
-        }
+        if (img.naturalWidth <= 120 && img.currentSrc.indexOf("maxresdefault") !== -1) fallback();
       });
       img.addEventListener("error", function () {
-        if (img.src.indexOf("maxresdefault") !== -1) {
-          img.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
-        }
+        if (img.currentSrc.indexOf("maxresdefault") !== -1) fallback();
       });
     }
 

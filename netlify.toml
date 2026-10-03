@@ -46,6 +46,11 @@
 [[headers]]
   for = "/*"
   [headers.values]
+    # Force HTTPS for a year (including the Givebutter donation flow) so traffic can't be downgraded and intercepted.
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # Upgrade any stray http:// subresource to https://, block plugins, and stop other sites framing these pages.
+    # Script/frame sources are left open so the Givebutter widget and its payment processors keep working.
+    Content-Security-Policy = "upgrade-insecure-requests; base-uri 'self'; object-src 'none'; frame-ancestors 'self'"
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
@@ -62,7 +67,8 @@
   [headers.values]
     Cache-Control = "public, max-age=3600, must-revalidate"
 
+# Images aren't fingerprinted either, so a replaced file must be able to refresh. Cache for a week, then revalidate.
 [[headers]]
   for = "/images/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=604800, must-revalidate"

@@ -10,7 +10,7 @@
      6. Hero
      7. Sections and components
      8. Forms
-     9. Footer and floating donate button
+     9. Footer
     10. Utilities and accessibility
    ========================================================================== */
 
@@ -66,6 +66,11 @@ img,
 svg {
   display: block;
   max-width: 100%;
+}
+
+/* Keep the intrinsic aspect ratio when CSS narrows an image that has width/height attributes. */
+img {
+  height: auto;
 }
 
 h1,
@@ -473,6 +478,7 @@ body[data-menu-open="true"] {
 
 .hero__wordmark {
   width: 100%;
+  height: auto;
   max-width: 760px;
   margin: 0 auto;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
@@ -698,6 +704,7 @@ body[data-menu-open="true"] {
 
 .nonprofit__logo {
   width: 112px;
+  height: auto;
   margin: 0 auto;
 }
 
@@ -937,7 +944,7 @@ body[data-menu-open="true"] {
   }
 }
 
-/* 9. Footer and floating donate button */
+/* 9. Footer */
 .site-footer {
   margin-top: 96px;
   border-top: 1px solid var(--color-line);
@@ -982,17 +989,18 @@ body[data-menu-open="true"] {
   color: var(--color-ink);
 }
 
-.site-footer__legal {
+.site-footer__address {
   margin-top: 2rem;
+  font-style: normal;
   font-size: 0.875rem;
-  color: var(--color-muted-strong);
+  line-height: 1.6;
+  color: var(--color-muted);
 }
 
-.donate-chip {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 50;
+.site-footer__legal {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--color-muted-strong);
 }
 
 /* 10. Utilities and accessibility */
